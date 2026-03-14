@@ -1,0 +1,30 @@
+Part 1: Describe how you would build a logistic regression model to predict the probability of a bid winning (win) based on the other columns. What features would you select and why?
+
+columns i will select:
+convert date_hour to day_week, hour, month: The bidding will be different for weekends and weekdays. it affects the prebid win probability. similarly, month and hour of day also affects the win probability
+timezone: the time zone also depends on the win probability. Because, the america based timezones has more competition and bids. Thereby low win probability (one hot encoding needed)
+os_name: windows has more bidding count which means it has more users . thereby more competion and low win probability compared to other os. (one hot encoding needed)
+size: different size counts thereby vaying competition and diff win probability (one hot encoding needed)
+convert bid range to floor price and max price and use the diff (bid_price- floor_price), floor_price, max_price. higher diff means high win probability. also higher floor price means low win probability
+response_count/request_count- higher this value, high chance of win probability
+sum_time_to_respond: higher latency means bid doesn't happend, thereby no win, less probability in winning
+avg_bid: higher the avg_bid, chances of winning is high
+create a column bid_price_in_bid_range to check the bid price is whether inside the range or not. if yes, chances of win is high else chances of win is low
+bidder: some bidders don't do bidding regularly there by decrease their chance of winning. bidders who bid more has higher chance of winning. (one hot encoding needed)
+ad_unit: it also affect the win probability. one hot encoding required
+
+  Part 2: Based on the following results from a logistic regression model  trained on the dataset, interpret the coefficients:
+	•	bid_amount: Coefficient = 0.8
+	•	time_to_bid: Coefficient = -0.4
+	•	ad_unit_A: Coefficient = 0.3 (reference category: ad_unit_B)
+
+
+positive coefficient means as the feature value increase, the win probability also increases. if the coefficient is stronger, then that feature affects the winning probability more. for example the coefficient of bid_amount is 0.8, then the winning probability will increase by e^0.8 which is higher than the ad_unit_A coefficieny , 0.3. e^0.8  > e^0.3. Here, as bid_amount increases, win probabiliy also increases. ad_unit_A is an one hot encoded feature, so if it is true means, the probability also increases. But the bid_amount feature has more effect on win probability than as_unit_A
+Also negative coefficient as in time_to_bid means it will decrease the probability of winning. it reduces the winning by e^0.4 times. Which means as time_to_bid value increase, winning probability decreases.
+ 
+
+
+
+
+
+
